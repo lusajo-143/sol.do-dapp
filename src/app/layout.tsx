@@ -13,6 +13,7 @@ const links: { label: string; path: string }[] = [
   { label: 'Account', path: '/account' },
   { label: 'Clusters', path: '/clusters' },
   { label: 'Basic Program', path: '/basic' },
+  { label: 'Todo Program', path: '/todo' },
 ]
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -22,7 +23,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ReactQueryProvider>
           <ClusterProvider>
             <SolanaProvider>
-              <UiLayout links={links}>{children}</UiLayout>
+              <div className="bg-gradient-to-br from-primary to-secondary h-[100vh] text-gray-700">
+                <UiLayout links={links}>{children}</UiLayout>
+              </div>
             </SolanaProvider>
           </ClusterProvider>
         </ReactQueryProvider>

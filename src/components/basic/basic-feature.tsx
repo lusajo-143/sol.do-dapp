@@ -14,7 +14,7 @@ export default function BasicFeature() {
   return publicKey ? (
     <div>
       <AppHero
-        title="Basic"
+        title="Basic ---"
         subtitle={'Run the program by clicking the "Run program" button.'}
       >
         <p className="mb-6">
