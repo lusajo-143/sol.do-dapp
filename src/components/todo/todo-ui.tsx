@@ -1,9 +1,10 @@
 'use client';
 
-import  './todo-ui.css'
+import './todo-ui.css'
 // import todoCss from './todo-ui.css'
-
-import { useTodoProgram } from './todo-data-access'
+import {useTodoProgram} from './todo-data-access'
+import {faShoppingBasket} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export function TodoCreate() {
   const { createTodo } = useTodoProgram();
@@ -23,23 +24,36 @@ export function TodoInitiate() {
   const { initializeTodo } = useTodoProgram();
 
   return (
-    <button
-      className="bg-white/50 px-3 py-2 rounded-xl"
-      onClick={() => initializeTodo.mutateAsync()}
-      disabled={initializeTodo.isPending}
-    >
-      Create your Bucket {initializeTodo.isPending && '...'}
-    </button>
+      <div className="mt-24 flex gap-4 flex-col items-center bg-primary-50/60 p-8 rounded-xl">
+          <div className="text-center flex flex-col gap-4">
+              <span className="font-extrabold text-2xl">
+                  SOL.DO bucket.
+              </span>
+              <div className="text-sm flex flex-col">
+                  <span>Your account does not have SOL.DO bucket.</span>
+                  <span>Create your bucket to start saving your todos.</span>
+              </div>
+          </div>
+          <div className="">
+              <button
+                  className="bg-primary text-white px-3 py-2 rounded-xl flex gap-2 items-center"
+                  onClick={() => initializeTodo.mutateAsync()}
+                  disabled={initializeTodo.isPending}>
+                  <FontAwesomeIcon className="text-white " icon={faShoppingBasket}/>
+                  Create your Bucket {initializeTodo.isPending && '...'}
+              </button>
+          </div>
+      </div>
   );
 }
 
 export function TodoProgram() {
-  const { getProgramAccount } = useTodoProgram();
+    const {getProgramAccount} = useTodoProgram();
 
-  if (getProgramAccount.isLoading) {
-    return <span className="loading loading-spinner loading-lg"></span>;
-  }
-  if (!getProgramAccount.data?.value) {
+    if (getProgramAccount.isLoading) {
+        return <span className="loading loading-spinner loading-lg"></span>;
+    }
+    if (!getProgramAccount.data?.value) {
     return (
       <div className="alert alert-info flex justify-center">
         <span>
@@ -65,34 +79,39 @@ export function TodoList() {
     return <span className="loading loading-spinner loading-lg"></span>;
   }
 
-  if (getUserTodoList.data) {
+  if (!getUserTodoList.data) {
     return (
-        <div className="flex flex-col">
-          <span>
-            eheh
-          </span>
-          <div className="flex items-center">
-              <TodoInitiate />
-          </div>
-        </div>
+      <TodoInitiate />
     );
   }
 
   return (
-      <div className="">
+      <div className="bg-green-500 grow">
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 mt-4">
+
+            <div className="hdh">
+                SOL.DO Bucket
+            </div>
+
           <div id="checklist" className="flex flex-col gap-3">
             {
               getUserTodoList.data.todoTasks.map(task => {
-                return <div className="flex flex-col p-3 rounded-md bg-white/10">
-                  <div className="flex items-center">
-                    <input value="2" name="r" type="checkbox" id={task.id}/>
-                    <label htmlFor={task.id}>{task.description}</label>
-                  </div>
-                  <div className="pl-9 text-xs">
-                    Due On: <span className="font-bold">{task.dueDate}</span>
-                  </div>
+                return <div className="border border-primary p-0.5 rounded-lg">
+                    <div
+                        className="flex flex-col  p-3 rounded-md bg-gradient-to-tl from-primary/70 to-secondary/70 text-white">
+                        <div className="flex items-center">
+                            <input value="2" name="r" type="checkbox" id={task.id}/>
+                            <label htmlFor={task.id} className="!flex !justify-between !items-center gap-8">
+                                <span>
+                                    {task.description}
+                                </span>
+                                <span className="text-xs mt-0.5">
+                                    Due On: <span className="font-bold">{task.dueDate}</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
                 </div>
               })
             }
@@ -100,4 +119,14 @@ export function TodoList() {
         </div>
       </div>
   )
+}
+
+
+export function TodoInput() {
+
+    return (
+        <div>
+            Input
+        </div>
+    )
 }
