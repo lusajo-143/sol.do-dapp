@@ -62,10 +62,6 @@ export type TodoApp = {
         {
           "name": "taskId",
           "type": "u64"
-        },
-        {
-          "name": "isCompleted",
-          "type": "bool"
         }
       ]
     },

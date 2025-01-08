@@ -5,6 +5,7 @@ import './todo-ui.css'
 import {useTodoProgram} from './todo-data-access'
 import {faShoppingBasket} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {Input} from "@nextui-org/input";
 
 export function TodoCreate() {
   const { createTodo } = useTodoProgram();
@@ -12,7 +13,7 @@ export function TodoCreate() {
   return (
     <button
       className="btn btn-xs lg:btn-md btn-primary"
-      onClick={() => createTodo.mutateAsync()}
+      onClick={() => createTodo.mutateAsync('')}
       disabled={createTodo.isPending}
     >
       Run program{createTodo.isPending && '...'}
@@ -73,7 +74,7 @@ export function TodoProgram() {
 
 export function TodoList() {
 
-  const { getUserTodoList } = useTodoProgram();
+    const {getUserTodoList, changeTodoStatus} = useTodoProgram();
 
   if (getUserTodoList.isLoading) {
     return <span className="loading loading-spinner loading-lg"></span>;
@@ -86,22 +87,23 @@ export function TodoList() {
   }
 
   return (
-      <div className="bg-green-500 grow">
-
         <div className="flex flex-col gap-2 mt-4">
 
-            <div className="hdh">
+            <div className="!font-bold">
                 SOL.DO Bucket
             </div>
 
           <div id="checklist" className="flex flex-col gap-3">
             {
               getUserTodoList.data.todoTasks.map(task => {
-                return <div className="border border-primary p-0.5 rounded-lg">
+                  return <div className="border border-primary p-0.5 rounded-lg" key={task.id}>
                     <div
                         className="flex flex-col  p-3 rounded-md bg-gradient-to-tl from-primary/70 to-secondary/70 text-white">
                         <div className="flex items-center">
-                            <input value="2" name="r" type="checkbox" id={task.id}/>
+                            <input checked={task?.isCompleted}
+                                   onChange={() => {
+                                       changeTodoStatus.mutateAsync(task?.id?.toNumber())
+                                   }} value="2" name="r" type="checkbox" id={task.id}/>
                             <label htmlFor={task.id} className="!flex !justify-between !items-center gap-8">
                                 <span>
                                     {task.description}
@@ -117,16 +119,35 @@ export function TodoList() {
             }
           </div>
         </div>
-      </div>
   )
 }
 
 
 export function TodoInput() {
 
+    const {createTodo, todoDescription, setTodoDescription} = useTodoProgram();
+
+
     return (
         <div>
-            Input
+            <div className="relative w-full flex-wrap md:flex-nowrap gap-4">
+
+                <form onSubmit={(e) => {
+                    e.preventDefault()
+                    createTodo.mutateAsync(todoDescription);
+                }}>
+                    <Input label="Enter Your Todo..." multiple={true} type="text" value={todoDescription}
+                           onValueChange={setTodoDescription} className="rounded-xl shadow-lg shadow-gray-200"/>
+                    <div
+                        className={`absolute top-0 -right-8 mt-2 ${todoDescription === '' ? '' : 'hover:border transition-all ease-in-out delay-150 duration-300'} border-primary/80 p-[1px] rounded-xl`}>
+                        <button
+                            disabled={todoDescription === '' || createTodo.isPending}
+                            className={`${todoDescription === '' ? 'bg-primary-100 text-gray-400' : 'bg-primary/80 text-white'} rounded-xl p-2`}>
+                            {!createTodo.isPending ? <div>Create</div> : <div>Creating ...</div>}
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     )
 }

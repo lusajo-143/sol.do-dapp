@@ -17,52 +17,34 @@ export default function TodoFeature() {
   const { programId } = useTodoProgram();
 
   return publicKey ? (
-    <div className="bg-green-500 h-full flex flex-col gap-2 justify-between">
+    <div className="h-full flex flex-col gap-2 justify-between">
 
         <div>
-            <div className="flex flex-col gap-4 text-center">
+            <div className="flex flex-col items-center gap-4 text-center">
             <span className={rubik.className}>
                 <h1 className="text-6xl font-bold bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text">
                   SOL.DO
               </h1>
             </span>
 
-                <div className="flex gap-4 text-center items-center">
-                    <span className="text-sm">Program Address: </span>
-                    <div className="flex gap-1 items-center">
-                        <ExplorerLink
-                            className="text-accent-700 underline"
-                            path={`account/${programId}`}
-                            label={ellipsify(programId.toString())}
-                        />
-                        <FontAwesomeIcon className="text-accent-700 text-xs animate-pulse -rotate-45"
-                                         icon={faHandPointer}/>
-                    </div>
+            <div className="flex gap-4 text-center items-center">
+                <span className="text-sm">Program Address: </span>
+                <div className="flex gap-1 items-center">
+                    <ExplorerLink
+                        className="text-accent-700 underline"
+                        path={`account/${programId}`}
+                        label={ellipsify(programId.toString())}
+                    />
+                    <FontAwesomeIcon className="text-accent-700 text-xs animate-pulse -rotate-45"
+                                     icon={faHandPointer}/>
                 </div>
+            </div>
             </div>
 
             <TodoList/>
         </div>
 
-        <div>
-            <TodoInput />
-        </div>
-
-        {/*<AppHero*/}
-        {/*  title="Todo"*/}
-        {/*  subtitle={'Run the program by clicking the "Run program" button.'}*/}
-        {/*>*/}
-        {/*  <p className="mb-6">*/}
-        {/*    <ExplorerLink*/}
-        {/*      path={`account/${programId}`}*/}
-        {/*      label={ellipsify(programId.toString())}*/}
-        {/*    />*/}
-        {/*  </p>*/}
-        {/*  /!*<TodoCreate />*!/*/}
-
-        {/*</AppHero>*/}
-        {/*  <TodoList />*/}
-        {/*<TodoProgram />*/}
+        <TodoInput />
     </div>
   ) : (
       <div className="max-w-4xl mx-auto">

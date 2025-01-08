@@ -33,7 +33,7 @@ export function UiLayout({ children, links }: { children: ReactNode; links: { la
         </Suspense>
         <Toaster position="bottom-right" />
       </div>
-      <footer className="footer footer-center p-4 bg-base-300 text-base-content">
+      <footer className="text-center p-4 text-xs text-base-content">
         <aside>
           <p>
             Developed by{' '}

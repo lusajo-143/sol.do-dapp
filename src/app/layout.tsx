@@ -4,7 +4,7 @@ import {SolanaProvider} from '@/components/solana/solana-provider'
 import {UiLayout} from '@/components/ui/ui-layout'
 import {ReactQueryProvider} from './react-query-provider'
 import Head from 'next/head';
-import { Quicksand } from 'next/font/google'
+import {Quicksand} from 'next/font/google'
 
 const quicksand = Quicksand({subsets: ['latin'], weight: '500'})
 
@@ -23,18 +23,17 @@ const links: { label: string; path: string }[] = [
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-    <Head>
-      <link rel="preconnect" href="https://fonts.googleapis.com"/>
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin/>
-      <link href="https://fonts.googleapis.com/css2?family=Rubik+Puddles&display=swap" rel="stylesheet"/>
-    </Head>
-    <body className={quicksand.className}>
-    <ReactQueryProvider>
-      <ClusterProvider>
-        <SolanaProvider>
-          {/*<div className="app-bg h-[100vh] text-gray-700">*/}
-          <div className="bg-gray-50 h-[100vh] text-gray-700">
-            <UiLayout links={links}>{children}</UiLayout>
+      <Head>
+        <link rel="preconnect" href="https://fonts.googleapis.com"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin/>
+        <link href="https://fonts.googleapis.com/css2?family=Rubik+Puddles&display=swap" rel="stylesheet"/>
+      </Head>
+      <body className={quicksand.className}>
+        <ReactQueryProvider>
+          <ClusterProvider>
+            <SolanaProvider>
+              <div className="bg-gray-50 h-[100vh] text-gray-700">
+                <UiLayout links={links}>{children}</UiLayout>
               </div>
             </SolanaProvider>
           </ClusterProvider>

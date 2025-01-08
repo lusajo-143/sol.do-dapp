@@ -56,10 +56,6 @@
         {
           "name": "task_id",
           "type": "u64"
-        },
-        {
-          "name": "is_completed",
-          "type": "bool"
         }
       ]
     },
