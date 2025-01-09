@@ -27,19 +27,21 @@ export function UiLayout({ children, links }: { children: ReactNode; links: { la
       </div>
         <div className="flex justify-center mb-2">
             <div className="flex text-2xl gap-4 items-center">
-                <Link href={'https://www.linkedin.com/in/lusajo-shitindi-12368b20a/?originalSubdomain=tz'}>
+                <Link href={'https://www.linkedin.com/in/lusajo-shitindi-12368b20a/?originalSubdomain=tz'}
+                      target={'_blank'}>
                     <FontAwesomeIcon className="text-[#0177B5]"
                                      icon={faLinkedin}/>
                 </Link>
-                <Link href={'https://github.com/lusajo-143'}>
+                <Link href={'https://github.com/lusajo-143'} target={'_blank'}>
                     <FontAwesomeIcon className="text-gray-900"
                                      icon={faGithub}/>
                 </Link>
-                <Link href={'https://x.com/lusajo143'}>
+                <Link href={'https://x.com/lusajo143'} target={'_blank'}>
                     <img src="/x.svg" alt="Logo" width={23} height={40}/>
                 </Link>
                 <Link
-                    href={'https://www.upwork.com/freelancers/~010b7593e93155e444?referrer_url_path=%2Fnx%2Fsearch%2Ftalent%2Fdetails%2F~010b7593e93155e444%2Fprofile'}>
+                    href={'https://www.upwork.com/freelancers/~010b7593e93155e444?referrer_url_path=%2Fnx%2Fsearch%2Ftalent%2Fdetails%2F~010b7593e93155e444%2Fprofile'}
+                    target={'_blank'}>
                     <img src="/upwork.svg" alt="Logo" width={70} height={40}/>
                 </Link>
             </div>
