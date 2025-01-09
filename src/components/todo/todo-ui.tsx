@@ -28,9 +28,9 @@ export function TodoInitiate() {
   const { initializeTodo } = useTodoProgram();
 
   return (
-      <div className="mt-24 flex gap-4 flex-col items-center bg-primary-50/60 p-8 rounded-xl">
+      <div className="mt-4 md:mt-24 flex gap-4 flex-col items-center bg-primary-50/60 p-8 rounded-xl">
           <div className="text-center flex flex-col gap-4">
-              <span className={roboto.className+"font-extrabold text-2xl"}>
+              <span className={roboto.className+" font-extrabold text-2xl"}>
                   SOL.DO Bucket.
               </span>
               <div className="text-sm flex flex-col">

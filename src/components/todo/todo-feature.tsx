@@ -17,7 +17,7 @@ export default function TodoFeature() {
   const { programId } = useTodoProgram();
 
   return publicKey ? (
-    <div className="h-full flex flex-col gap-2 justify-between">
+    <div className="h-full flex flex-col gap-2 justify-between md:min-w-[400px]">
 
         <div>
             <div className="flex flex-col items-center gap-4 text-center">

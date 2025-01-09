@@ -1,13 +1,13 @@
 'use client'
 
-import { useWallet } from '@solana/wallet-adapter-react'
-import { LAMPORTS_PER_SOL, PublicKey } from '@solana/web3.js'
-import { IconRefresh } from '@tabler/icons-react'
-import { useQueryClient } from '@tanstack/react-query'
-import { useMemo, useState } from 'react'
-import { AppModal, ellipsify } from '../ui/ui-layout'
-import { useCluster } from '../cluster/cluster-data-access'
-import { ExplorerLink } from '../cluster/cluster-ui'
+import {useWallet} from '@solana/wallet-adapter-react'
+import {LAMPORTS_PER_SOL, PublicKey} from '@solana/web3.js'
+import {IconRefresh} from '@tabler/icons-react'
+import {useQueryClient} from '@tanstack/react-query'
+import {useMemo, useState} from 'react'
+import {AppModal, ellipsify} from '../ui/ui-layout'
+import {useCluster} from '../cluster/cluster-data-access'
+import {ExplorerLink} from '../cluster/cluster-ui'
 import {
   useGetBalance,
   useGetSignatures,
@@ -16,19 +16,25 @@ import {
   useTransferSol,
 } from './account-data-access'
 
-export function AccountBalance({ address }: { address: PublicKey }) {
+export function AccountBalance({address, small, customClasses}: { address: PublicKey, small?: boolean, customClasses?: string }) {
   const query = useGetBalance({ address })
 
   return (
     <div>
-      <h1 className="text-5xl font-bold cursor-pointer" onClick={() => query.refetch()}>
-        {query.data ? <BalanceSol balance={query.data} /> : '...'} SOL
-      </h1>
+      {
+        small ? <span className={customClasses} onClick={() => query.refetch()}>
+          {query.data ? <BalanceSol balance={query.data}/> : '...'} SOL
+        </span> : <h1 className={customClasses+" text-5xl font-bold cursor-pointer"} onClick={() => query.refetch()}>
+          {query.data ? <BalanceSol balance={query.data}/> : '...'} SOL
+        </h1>
+      }
+
     </div>
   )
 }
+
 export function AccountChecker() {
-  const { publicKey } = useWallet()
+  const {publicKey} = useWallet()
   if (!publicKey) {
     return null
   }
@@ -49,7 +55,7 @@ export function AccountBalanceCheck({ address }: { address: PublicKey }) {
           You are connected to <strong>{cluster.name}</strong> but your account is not found on this cluster.
         </span>
         <button
-          className="btn btn-xs btn-neutral"
+            className="btn btn-xs btn-neutral animate-pulse"
           onClick={() => mutation.mutateAsync(1).catch((err) => console.log(err))}
         >
           Request Airdrop
@@ -263,7 +269,7 @@ export function AccountTransactions({ address }: { address: PublicKey }) {
   )
 }
 
-function BalanceSol({ balance }: { balance: number }) {
+export function BalanceSol({balance}: { balance: number }) {
   return <span>{Math.round((balance / LAMPORTS_PER_SOL) * 100000) / 100000}</span>
 }
 
