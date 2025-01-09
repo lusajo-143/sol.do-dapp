@@ -14,7 +14,7 @@ const rubik = Rubik_Puddles({subsets: ['hebrew'], weight: '400'})
 
 export default function TodoFeature() {
   const { publicKey } = useWallet();
-  const { programId } = useTodoProgram();
+  const { programId, getUserTodoList } = useTodoProgram();
 
   return publicKey ? (
     <div className="h-full flex flex-col gap-2 justify-between md:min-w-[400px]">
@@ -43,8 +43,9 @@ export default function TodoFeature() {
 
             <TodoList/>
         </div>
-
-        <TodoInput />
+        {
+            getUserTodoList.data?.todoTasks?.length >= 0 ? <TodoInput /> : ''
+        }
     </div>
   ) : (
       <div className="max-w-4xl mx-auto">

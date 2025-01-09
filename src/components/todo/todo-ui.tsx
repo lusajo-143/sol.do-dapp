@@ -34,8 +34,8 @@ export function TodoInitiate() {
                   SOL.DO Bucket.
               </span>
               <div className="text-sm flex flex-col">
-                  <span>Your account does not have SOL.DO bucket.</span>
-                  <span>Create your bucket to start saving your todos.</span>
+                  <span>Your SOL.DO bucket isn’t set up yet.</span>
+                  <span>Create one now to start saving and organizing your todos!</span>
               </div>
           </div>
           <div className="">
@@ -125,7 +125,7 @@ export function TodoList() {
                         }
                     </div>
                     :
-                    <div className="flex flex-col items-center gap-4 mt-2 p-2 bg-primary-50/40 rounded-xl">
+                    <div className="flex flex-col items-center gap-4 mt-8 p-2 bg-primary-50/40 rounded-xl">
                         <div className="flex flex-col items-center gap-4 borde bg-primary-50/70 p-8 rounded-xl">
                             <span className="text-primary-700 text-6xl animate-pulse">
                                 🪣
