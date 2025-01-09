@@ -22,8 +22,11 @@ export function UiLayout({ children, links }: { children: ReactNode; links: { la
 
   return (
     <div className="h-full flex flex-col overflow-y-scroll">
-      <div className="flex justify-end p-3">
+      <div className="flex justify-end gap-3 p-3">
         <WalletButton />
+          <div className="bg-primary text-white px-3 py-2 rounded-xl flex gap-2 items-center">
+              Request Airdrop
+          </div>
       </div>
         <div className="flex justify-center mb-2">
             <div className="flex text-2xl gap-4 items-center">

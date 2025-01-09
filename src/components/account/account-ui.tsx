@@ -282,7 +282,7 @@ function ModalReceive({ hide, show, address }: { hide: () => void; show: boolean
   )
 }
 
-function ModalAirdrop({ hide, show, address }: { hide: () => void; show: boolean; address: PublicKey }) {
+export function ModalAirdrop({ hide, show, address }: { hide: () => void; show: boolean; address: PublicKey }) {
   const mutation = useRequestAirdrop({ address })
   const [amount, setAmount] = useState('2')
 
