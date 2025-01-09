@@ -6,6 +6,9 @@ import {useTodoProgram} from './todo-data-access'
 import {faShoppingBasket} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Input} from "@nextui-org/input";
+import {Roboto} from 'next/font/google'
+
+const roboto = Roboto({subsets: ['latin'], weight: '700'})
 
 export function TodoCreate() {
   const { createTodo } = useTodoProgram();
@@ -27,8 +30,8 @@ export function TodoInitiate() {
   return (
       <div className="mt-24 flex gap-4 flex-col items-center bg-primary-50/60 p-8 rounded-xl">
           <div className="text-center flex flex-col gap-4">
-              <span className="font-extrabold text-2xl">
-                  SOL.DO bucket.
+              <span className={roboto.className+"font-extrabold text-2xl"}>
+                  SOL.DO Bucket.
               </span>
               <div className="text-sm flex flex-col">
                   <span>Your account does not have SOL.DO bucket.</span>
@@ -76,9 +79,9 @@ export function TodoList() {
 
     const {getUserTodoList, changeTodoStatus} = useTodoProgram();
 
-  if (getUserTodoList.isLoading) {
-    return <span className="loading loading-spinner loading-lg"></span>;
-  }
+    // if (getUserTodoList.isPending) {
+    //   return <span className="loading loading-spinner loading-lg"></span>;
+    // }
 
   if (!getUserTodoList.data) {
     return (
@@ -89,35 +92,50 @@ export function TodoList() {
   return (
         <div className="flex flex-col gap-2 mt-4">
 
-            <div className="!font-bold">
+            <div className={roboto.className + " text-xl mt-4"}>
                 SOL.DO Bucket
             </div>
 
-          <div id="checklist" className="flex flex-col gap-3">
             {
-              getUserTodoList.data.todoTasks.map(task => {
-                  return <div className="border border-primary p-0.5 rounded-lg" key={task.id}>
-                    <div
-                        className="flex flex-col  p-3 rounded-md bg-gradient-to-tl from-primary/70 to-secondary/70 text-white">
-                        <div className="flex items-center">
-                            <input checked={task?.isCompleted}
-                                   onChange={() => {
-                                       changeTodoStatus.mutateAsync(task?.id?.toNumber())
-                                   }} value="2" name="r" type="checkbox" id={task.id}/>
-                            <label htmlFor={task.id} className="!flex !justify-between !items-center gap-8">
+                getUserTodoList.data?.todoTasks?.length ?
+                    <div id="checklist" className="flex flex-col gap-3">
+                        {
+                            getUserTodoList.data.todoTasks.map(task => {
+                                return <div className="border border-primary p-0.5 rounded-lg" key={task.id}>
+                                    <div
+                                        className="flex flex-col p-3 rounded-md bg-gradient-to-tl from-primary/70 to-secondary/70 text-white">
+                                        <div className="flex items-center">
+                                            <input checked={task?.isCompleted}
+                                                   onChange={() => {
+                                                       changeTodoStatus.mutateAsync(task?.id?.toNumber())
+                                                   }} value="2" name="r" type="checkbox" id={task.id}/>
+                                            <label htmlFor={task.id}
+                                                   className="!flex !justify-between !items-center gap-8">
                                 <span>
                                     {task.description}
                                 </span>
-                                <span className="text-xs mt-0.5">
-                                    Due On: <span className="font-bold">{task.dueDate}</span>
+                                                <span className="text-xs mt-0.5">
+                                    Created On: <span className="font-bold">{task.dueDate}</span>
                                 </span>
-                            </label>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            })
+                        }
+                    </div>
+                    :
+                    <div className="flex flex-col items-center gap-4 mt-2 p-2 bg-primary-50/40 rounded-xl">
+                        <div className="flex flex-col items-center gap-4 borde bg-primary-50/70 p-8 rounded-xl">
+                            <span className="text-primary-700 text-6xl animate-pulse">
+                                🪣
+                            </span>
+                            <span className="text-primary font-bold">Start by adding your very first todo task</span>
+                            <span className="text-gray-500 font-bold">💥💥💥 Let's get things rolling! 💥💥💥</span>
                         </div>
                     </div>
-                </div>
-              })
             }
-          </div>
+
         </div>
   )
 }
@@ -130,7 +148,7 @@ export function TodoInput() {
 
     return (
         <div>
-            <div className="relative w-full flex-wrap md:flex-nowrap gap-4">
+            <div className="flex flex-col md:relative w-full">
 
                 <form onSubmit={(e) => {
                     e.preventDefault()
@@ -139,10 +157,10 @@ export function TodoInput() {
                     <Input label="Enter Your Todo..." multiple={true} type="text" value={todoDescription}
                            onValueChange={setTodoDescription} className="rounded-xl shadow-lg shadow-gray-200"/>
                     <div
-                        className={`absolute top-0 -right-8 mt-2 ${todoDescription === '' ? '' : 'hover:border transition-all ease-in-out delay-150 duration-300'} border-primary/80 p-[1px] rounded-xl`}>
+                        className={`w-full md:w-auto md:mt-2 md:absolute top-0 right-2 mt-3 ${todoDescription === '' ? '' : 'hover:border transition-all ease-in-out delay-150 duration-300'} border-primary/80 p-[1px] rounded-xl`}>
                         <button
                             disabled={todoDescription === '' || createTodo.isPending}
-                            className={`${todoDescription === '' ? 'bg-primary-100 text-gray-400' : 'bg-primary/80 text-white'} rounded-xl p-2`}>
+                            className={`${todoDescription === '' ? 'bg-primary-100 text-gray-400' : 'bg-primary/80 text-white'} w-full md:w-auto  rounded-xl p-2`}>
                             {!createTodo.isPending ? <div>Create</div> : <div>Creating ...</div>}
                         </button>
                     </div>

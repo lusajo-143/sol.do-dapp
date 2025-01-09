@@ -39,7 +39,11 @@ export function useTodoProgram() {
   const createTodo = useMutation({
 
     mutationKey: ['todo_app', 'create_todo', { cluster }],
-    mutationFn: (description: string) => program.methods.createTodo(description, "02 Jan 2025").accounts({
+    mutationFn: (description: string) => program.methods.createTodo(description, new Date().toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    }).replace(/ /g, ' ')).accounts({
       todoList: getAccountPDA(provider, program),
       payer: provider.wallet.publicKey
     }).rpc(),
@@ -54,8 +58,6 @@ export function useTodoProgram() {
   const initializeTodo = useMutation({
     mutationKey: ['todo_app', 'initialize', { cluster }],
     mutationFn: () => {
-
-
       return program.methods.initialize()
       .accounts({
         todoList: getAccountPDA(provider, program),
@@ -65,6 +67,7 @@ export function useTodoProgram() {
     },
     onSuccess: (signature) => {
       transactionToast(signature);
+      queryClient.invalidateQueries(['get-user-todo-list', {cluster}]);
     },
     onError: () => toast.error('Failed to run program'),
   });
