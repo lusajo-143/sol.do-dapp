@@ -2,17 +2,18 @@
 
 import {usePathname} from 'next/navigation'
 import * as React from 'react'
-import {ReactNode, Suspense, useEffect, useRef} from 'react'
+import {ReactNode, Suspense, useEffect, useRef, useState} from 'react'
 import toast, {Toaster} from 'react-hot-toast'
 
-import {AccountBalance, AccountChecker} from '../account/account-ui'
+import {AccountBalance, AccountChecker, ModalAirdrop} from '../account/account-ui'
 import {ClusterChecker, ExplorerLink} from '../cluster/cluster-ui'
 import {useAnchorProvider, WalletButton} from '../solana/solana-provider'
-import {LAMPORTS_PER_SOL} from "@solana/web3.js";
+import {LAMPORTS_PER_SOL, PublicKey} from "@solana/web3.js";
 import {useCluster} from "@/components/cluster/cluster-data-access";
 import Link from "next/link";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faGithub, faLinkedin} from "@fortawesome/free-brands-svg-icons";
+import {faCoins} from "@fortawesome/free-solid-svg-icons";
 
 export function UiLayout({ children, links }: { children: ReactNode; links: { label: string; path: string }[] }) {
   const pathname = usePathname()
@@ -24,9 +25,7 @@ export function UiLayout({ children, links }: { children: ReactNode; links: { la
     <div className="h-full flex flex-col overflow-y-scroll">
       <div className="flex justify-end gap-3 p-3">
         <WalletButton />
-          <div className="bg-primary text-white px-3 py-2 rounded-xl flex gap-2 items-center">
-              Request Airdrop
-          </div>
+          { provider.wallet?.publicKey?.toBase58() ? <RequestAirdrop address={provider.wallet?.publicKey}/> : null }
       </div>
         <div className="flex justify-center mb-2">
             <div className="flex text-2xl gap-4 items-center">
@@ -200,4 +199,21 @@ export function useTransactionToast() {
 
 export function BalanceSol({balance}: { balance: number }) {
     return <span>{Math.round((balance / LAMPORTS_PER_SOL) * 100000) / 100000}</span>
+}
+
+
+export function RequestAirdrop({address}: { address: PublicKey }) {
+
+    const [showAirDropModal, setShowAirDropModal] = useState(false);
+
+    return <div>
+        <button onClick={() => {
+            setShowAirDropModal(true)
+        }}
+             className="bg-primary text-white px-3 py-2 rounded-xl flex gap-2 items-center h-full">
+            <FontAwesomeIcon icon={faCoins}/>
+            <div>Request Airdrop</div>
+        </button>
+        <ModalAirdrop hide={() => setShowAirDropModal(false)} address={address} show={showAirDropModal}/>
+    </div>
 }

@@ -7,7 +7,6 @@ import {faShoppingBasket} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Input} from "@nextui-org/input";
 import {Roboto} from 'next/font/google'
-import {ModalAirdrop} from "@/components/account/account-ui";
 
 const roboto = Roboto({subsets: ['latin'], weight: '700'})
 
@@ -169,9 +168,4 @@ export function TodoInput() {
             </div>
         </div>
     )
-}
-
-
-export function RequestAirdrop() {
-    return <ModalAirdrop hide={() => setShowAirdropModal(false)} address={address} show={showAirdropModal} />
 }
